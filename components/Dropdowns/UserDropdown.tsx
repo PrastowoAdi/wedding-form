@@ -62,13 +62,15 @@ const UserDropdown = () => {
           }
         >
           <MenuItem href="/" title="Action" />
-          <MenuItem
-            title="Logout"
+          <button
+            className="block w-full px-4 py-2 text-sm font-normal text-left bg-transparent whitespace-nowrap text-slate-700"
             onClick={() => {
               dispatch(actions.authLogout());
               router.replace("/login");
             }}
-          />
+          >
+            Logout
+          </button>
         </div>
       </>
     );

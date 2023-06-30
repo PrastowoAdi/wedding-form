@@ -1,8 +1,8 @@
-import { FormPengantin, Navbar, Sidebar } from "@/components";
+import { FormLoveStory, Navbar, Sidebar } from "@/components";
 import AuthGuard from "@/core/AuthGuard";
 import React, { useMemo } from "react";
 
-const FormPengantinPage = () => {
+const FormLoveStoryPage = () => {
   const renderMain = useMemo(() => {
     return (
       <AuthGuard>
@@ -15,7 +15,7 @@ const FormPengantinPage = () => {
           >
             <div className="flex flex-wrap">
               <div className="w-full mb-12 xl:mb-0">
-                <FormPengantin />
+                <FormLoveStory />
               </div>
             </div>
           </div>
@@ -26,4 +26,4 @@ const FormPengantinPage = () => {
   return renderMain;
 };
 
-export default FormPengantinPage;
+export default FormLoveStoryPage;

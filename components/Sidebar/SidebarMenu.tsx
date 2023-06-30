@@ -50,6 +50,7 @@ function SidebarMenu(props: IProps) {
           <MenuItem href="/form-pengantin" title="Form Pengantin" />
           <MenuItem href="/form-acara" title="Form Acara" />
           <MenuItem href="/form-sharelove" title="Form Share Love" />
+          <MenuItem href="/form-lovestory" title="Form Love Story" />
         </ul>
       </div>
     );

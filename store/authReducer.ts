@@ -15,6 +15,20 @@ const AuthSlice = createSlice({
         },
       };
     },
+    authLogin: (state) => {
+      return {
+        ...state,
+        isLogin: true,
+      };
+    },
+    authLogout: () => {
+      return {
+        nav: {
+          title: "Dashboard",
+        },
+        isLogin: false,
+      };
+    },
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {

@@ -66,7 +66,7 @@ const UserDropdown = () => {
             title="Logout"
             onClick={() => {
               dispatch(actions.authLogout());
-              router.push("/login");
+              router.replace("/login");
             }}
           />
         </div>

@@ -32,13 +32,6 @@ function Sidebar() {
           {/* Divider */}
           <hr className="my-4 md:min-w-full" />
 
-          {/* User
-          <ul className="flex flex-wrap items-center list-none md:hidden">
-            <li className="relative inline-block">
-              <UserDropdown />
-            </li>
-          </ul> */}
-
           {/* Collapse */}
           <SidebarMenu
             collapseShow={collapseShow}

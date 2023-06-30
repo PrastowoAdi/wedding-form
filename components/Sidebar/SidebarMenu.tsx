@@ -48,6 +48,8 @@ function SidebarMenu(props: IProps) {
         <ul className="flex flex-col list-none md:flex-col md:min-w-full">
           <MenuItem href="/" title="Dashboard" />
           <MenuItem href="/form-pengantin" title="Form Pengantin" />
+          <MenuItem href="/form-acara" title="Form Acara" />
+          <MenuItem href="/form-sharelove" title="Form Share Love" />
         </ul>
       </div>
     );

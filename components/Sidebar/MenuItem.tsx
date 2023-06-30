@@ -1,4 +1,5 @@
 import { actions } from "@/store/authReducer";
+import { Dispatch } from "@reduxjs/toolkit";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useMemo } from "react";
@@ -38,7 +39,7 @@ function MenuItem(props: IProps) {
         </Link>
       </li>
     );
-  }, [title, href, router.pathname]);
+  }, [title, href, router.pathname, dispatch]);
   return renderMain;
 }
 

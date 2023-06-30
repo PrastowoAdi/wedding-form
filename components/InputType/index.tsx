@@ -20,7 +20,7 @@ function InputType(props: InputProps) {
         />
       </div>
     );
-  }, [children]);
+  }, [children, label]);
   return renderMain;
 }
 

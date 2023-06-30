@@ -27,7 +27,7 @@ function Form() {
     setNama("");
     setBank("");
     setNorek("");
-  }, [nama, bank, noRek, setListBank, setNama, setBank, setNorek]);
+  }, [listBank, nama, bank, noRek, setListBank, setNama, setBank, setNorek]);
 
   const removeDataFromList = useCallback(
     (rowSelect: string) => {
@@ -137,6 +137,7 @@ function Form() {
       </>
     );
   }, [
+    listBank,
     nama,
     bank,
     noRek,

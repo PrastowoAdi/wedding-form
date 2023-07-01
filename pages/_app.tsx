@@ -12,6 +12,7 @@ import { store, persistor } from "@/store";
 import Layout from "@/layout";
 
 import "../styles/globals.css";
+import { Navbar, Sidebar } from "@/components";
 
 type Page<P = {}> = NextPage<P> & {
   getLayout?: (page: ReactNode) => ReactNode;
@@ -23,7 +24,25 @@ type Props = AppProps & {
 
 const App = ({ Component, pageProps }: Props) => {
   const [queryClient] = React.useState(() => new QueryClient());
-  const getLayout = Component.getLayout ?? ((page) => <Layout>{page}</Layout>);
+  const getLayout =
+    Component.getLayout ??
+    ((page) => (
+      <Layout>
+        <Sidebar />
+        <div className="relative md:ml-64 bg-slate-600">
+          <Navbar />
+          <div
+            id="main-content"
+            className="absolute w-full px-4 mx-auto md:px-10 top-10 md:top-20"
+          >
+            <div className="flex flex-wrap">
+              <div className="w-full mb-12 xl:mb-0">{page}</div>
+            </div>
+          </div>
+        </div>
+      </Layout>
+    ));
+
   return (
     <>
       <Provider store={store}>

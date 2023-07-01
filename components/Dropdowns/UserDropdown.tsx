@@ -18,16 +18,16 @@ const UserDropdown = () => {
   };
 
   useEffect(() => {
-    const div: any = document.querySelector("#main-content");
+    // const div: any = document.querySelector("#main-content");
     const button: any = document.querySelector("#button");
     const tooltip: any = document.querySelector("#tooltip");
     createPopper(button, tooltip, {
       placement: "bottom-start",
     });
 
-    div.addEventListener("click", function () {
-      closeDropdownPopover();
-    });
+    // div.addEventListener("click", function () {
+    //   closeDropdownPopover();
+    // });
   }, [dropdownPopoverShow]);
 
   const renderMain = useMemo(() => {

@@ -1,7 +1,6 @@
-import React, { useMemo } from "react";
+import React from "react";
 
-import { FormShareLove, Navbar, Sidebar } from "@/components";
-import AuthGuard from "@/core/AuthGuard";
+import { FormShareLove } from "@/components";
 import { NextPage } from "next";
 
 const MainComponent: NextPage = () => {

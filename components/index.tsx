@@ -4,6 +4,7 @@ import FormPengantin from "./FormPengantin";
 import FormAcara from "./FormAcara";
 import FormShareLove from "./FormShareLove";
 import FormLoveStory from "./FormLoveStory";
+import Login from "./Login";
 
 export {
   FormPengantin,
@@ -12,4 +13,5 @@ export {
   FormAcara,
   FormShareLove,
   FormLoveStory,
+  Login,
 };

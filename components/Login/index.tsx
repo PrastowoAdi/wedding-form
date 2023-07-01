@@ -3,7 +3,9 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";
+import InputType from "../InputType";
 
+import { motion } from "framer-motion";
 function Login() {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -15,7 +17,21 @@ function Login() {
 
   const renderMain = useMemo(() => {
     return (
-      <div className="container h-full px-4 mx-auto">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: 1,
+          transition: {
+            delay: 0.3,
+            duration: 0.3,
+          },
+        }}
+        exit={{
+          opacity: 0,
+          transition: { duration: 0.3 },
+        }}
+        className="container h-full px-4 mx-auto"
+      >
         <div className="flex items-center content-center justify-center h-full">
           <div className="w-full px-4 lg:w-4/12">
             <div className="relative flex flex-col w-full min-w-0 mb-6 break-words border-0 rounded-lg shadow-lg bg-slate-200">
@@ -37,34 +53,16 @@ function Login() {
               </div>
               <div className="flex-auto px-4 py-10 pt-0 lg:px-10">
                 <form>
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block mb-2 text-xs font-bold uppercase text-slate-600"
-                      htmlFor="grid-password"
-                    >
-                      Username
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
-                      placeholder="Username"
-                    />
-                  </div>
-
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block mb-2 text-xs font-bold uppercase text-slate-600"
-                      htmlFor="grid-password"
-                    >
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      className="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
-                      placeholder="Password"
-                    />
-                  </div>
-
+                  <InputType
+                    label="Username"
+                    type="text"
+                    placeholder="Username"
+                  />
+                  <InputType
+                    label="Password"
+                    type="password"
+                    placeholder="Password"
+                  />
                   <div className="mt-6 text-center">
                     <button
                       className="w-full px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-slate-800 active:bg-slate-600 hover:shadow-lg focus:outline-none"
@@ -79,7 +77,7 @@ function Login() {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   }, [onSubmitLogin]);
   return renderMain;

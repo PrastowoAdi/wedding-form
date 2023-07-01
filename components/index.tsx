@@ -5,7 +5,7 @@ import FormAcara from "./FormAcara";
 import FormShareLove from "./FormShareLove";
 import FormLoveStory from "./FormLoveStory";
 import Login from "./Login";
-
+import Spinner from "./Spinner";
 export {
   FormPengantin,
   Sidebar,
@@ -14,4 +14,5 @@ export {
   FormShareLove,
   FormLoveStory,
   Login,
+  Spinner,
 };

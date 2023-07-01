@@ -1,6 +1,6 @@
 import { Login } from "@/components";
 import React, { useMemo } from "react";
-
+import { AnimatePresence } from "framer-motion";
 const LoginPage = () => {
   const renderMain = useMemo(() => {
     return (
@@ -10,10 +10,12 @@ const LoginPage = () => {
             <div
               className="absolute top-0 w-full h-full bg-no-repeat bg-slate-800 bg-full"
               style={{
-                backgroundImage: "url('/assets/register_bg_2.png')",
+                backgroundImage: "url('/assets/bg-login.webp')",
               }}
             ></div>
-            <Login />
+            <AnimatePresence>
+              <Login />
+            </AnimatePresence>
           </section>
         </main>
       </>

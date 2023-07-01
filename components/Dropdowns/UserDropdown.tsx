@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { createPopper } from "@popperjs/core";
-import MenuItem from "./MenuItem";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
-import { actions } from "@/store/authReducer";
 import { useRouter } from "next/router";
+
+import { actions } from "@/store/authReducer";
 
 const UserDropdown = () => {
   const dispatch = useDispatch();
@@ -18,16 +18,16 @@ const UserDropdown = () => {
   };
 
   useEffect(() => {
-    // const div: any = document.querySelector("#main-content");
+    const div: any = document.querySelector("#main-content");
     const button: any = document.querySelector("#button");
     const tooltip: any = document.querySelector("#tooltip");
     createPopper(button, tooltip, {
       placement: "bottom-start",
     });
 
-    // div.addEventListener("click", function () {
-    //   closeDropdownPopover();
-    // });
+    div.addEventListener("click", function () {
+      closeDropdownPopover();
+    });
   }, [dropdownPopoverShow]);
 
   const renderMain = useMemo(() => {
@@ -61,12 +61,18 @@ const UserDropdown = () => {
             "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
           }
         >
-          <MenuItem href="/" title="Action" />
+          {/* <MenuItem href="/" title="Action" /> */}
           <button
             className="block w-full px-4 py-2 text-sm font-normal text-left bg-transparent whitespace-nowrap text-slate-700"
             onClick={() => {
               dispatch(actions.authLogout());
-              router.replace("/login");
+              const timer = setTimeout(() => {
+                router.replace("/login");
+              }, 1000);
+
+              return () => {
+                clearTimeout(timer);
+              };
             }}
           >
             Logout

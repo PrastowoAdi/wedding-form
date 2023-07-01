@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import { IState } from "@/types/iState";
+import { Spinner } from "@/components";
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -10,12 +11,18 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!authRedux) {
-      router.replace("/login");
+      const timer = setTimeout(() => {
+        router.replace("/login");
+      }, 1000);
+
+      return () => {
+        clearTimeout(timer);
+      };
     }
   }, [router.route]);
 
   if (!authRedux) {
-    return "halo";
+    return <Spinner />;
   }
 
   return <>{children}</>;

@@ -1,19 +1,58 @@
 import { actions } from "@/store/authReducer";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import InputType from "../InputType";
 
 import { motion } from "framer-motion";
-function Login() {
-  const router = useRouter();
-  const dispatch = useDispatch();
+import { Controller, useForm } from "react-hook-form";
+import { useLogin } from "@/hooks";
+import { toast } from "react-toastify";
 
-  const onSubmitLogin = useCallback(() => {
-    dispatch(actions.authLogin());
-    router.replace("/");
-  }, [dispatch, router]);
+interface IFormInputs {
+  username: string;
+  password: string;
+}
+
+function Login() {
+  const dispatch = useDispatch();
+  const mutation = useLogin();
+  const [loadingBtn, setLoadingBtn] = useState<boolean>(false);
+
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<IFormInputs>();
+
+  const onSubmit = useCallback(
+    (data: IFormInputs) => {
+      setLoadingBtn(true);
+      try {
+        mutation.mutate(
+          {
+            ...data,
+          },
+          {
+            onSuccess(data) {
+              if (data) {
+                dispatch(actions.authLogin(data?.data?.token));
+                setLoadingBtn(false);
+              }
+            },
+            onError(err: any) {
+              toast.error(err.response.data.message);
+              setLoadingBtn(false);
+            },
+          }
+        );
+      } catch (error) {
+        setLoadingBtn(false);
+        console.log("err.submit", error);
+      }
+    },
+    [dispatch, mutation, setLoadingBtn]
+  );
 
   const renderMain = useMemo(() => {
     return (
@@ -52,25 +91,54 @@ function Login() {
                 <hr className="mt-6 border-b-1 border-slate-300" />
               </div>
               <div className="flex-auto px-4 py-10 pt-0 lg:px-10">
-                <form>
-                  <InputType
-                    label="Username"
-                    type="text"
-                    placeholder="Username"
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <Controller
+                    control={control}
+                    name="username"
+                    rules={{ required: true }}
+                    render={({ field: { onChange, onBlur } }) => (
+                      <InputType
+                        label="Username"
+                        type="text"
+                        onBlur={onBlur}
+                        onChange={onChange}
+                      />
+                    )}
                   />
-                  <InputType
-                    label="Password"
-                    type="password"
-                    placeholder="Password"
+                  {Boolean(errors.username) && (
+                    <p className="mb-5 text-xs font-semibold text-rose-500">
+                      username field is required!!!
+                    </p>
+                  )}
+                  <Controller
+                    control={control}
+                    name="password"
+                    rules={{ required: true }}
+                    render={({ field: { onChange, onBlur } }) => (
+                      <InputType
+                        label="Password"
+                        type="password"
+                        onBlur={onBlur}
+                        onChange={onChange}
+                      />
+                    )}
                   />
+                  {Boolean(errors.password) && (
+                    <p className="mb-5 text-xs font-semibold text-rose-500">
+                      password field is required!!!
+                    </p>
+                  )}
                   <div className="mt-6 text-center">
-                    <button
-                      className="w-full px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-slate-800 active:bg-slate-600 hover:shadow-lg focus:outline-none"
-                      type="button"
-                      onClick={onSubmitLogin}
-                    >
-                      Sign In
-                    </button>
+                    {loadingBtn ? (
+                      <div className="w-8 h-8 border-[6px] rounded-full border-slate-600 loader mx-auto"></div>
+                    ) : (
+                      <button
+                        className="w-full px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-slate-800 active:bg-slate-600 hover:shadow-lg focus:outline-none"
+                        type="submit"
+                      >
+                        Sign In
+                      </button>
+                    )}
                   </div>
                 </form>
               </div>
@@ -79,7 +147,14 @@ function Login() {
         </div>
       </motion.div>
     );
-  }, [onSubmitLogin]);
+  }, [
+    onSubmit,
+    handleSubmit,
+    control,
+    errors.username,
+    errors.password,
+    loadingBtn,
+  ]);
   return renderMain;
 }
 

@@ -1,8 +1,13 @@
-import InputType from "@/components/InputType";
-import TextArea from "@/components/TextArea";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
+import { toast } from "react-toastify";
+
+import InputType from "@/components/InputType";
+import TextArea from "@/components/TextArea";
+
+import { useAddLoveStory } from "@/hooks";
+import { IPropsUserInfo } from "@/types";
 
 interface StoryListType {
   title: string;
@@ -10,11 +15,21 @@ interface StoryListType {
   story: string;
 }
 
-function Form() {
+interface IProps {
+  data: IPropsUserInfo;
+  isLoading: boolean;
+}
+
+function Form(props: IProps) {
+  const { data, isLoading } = props;
+
+  const mutation = useAddLoveStory();
+
   const [storyList, setStoryList] = useState<StoryListType[]>([]);
   const [title, setTitle] = useState<string>("");
   const [date, setDate] = useState<string>("");
   const [story, setStory] = useState<string>("");
+  const [loadingBtn, setLoadingBtn] = useState<boolean>(false);
 
   const addDataToListStory = useCallback(() => {
     const listStory = [];
@@ -61,6 +76,38 @@ function Form() {
     },
     [storyList, setTitle, setDate, setStory, removeDataFromListStory]
   );
+
+  const onSubmit = useCallback(() => {
+    setLoadingBtn(true);
+    try {
+      mutation.mutate(
+        {
+          our_love_story: storyList,
+        },
+        {
+          onSuccess(data) {
+            if (data) {
+              toast.success(data.data.message);
+              setLoadingBtn(false);
+            }
+          },
+          onError(err: any) {
+            toast.error(err.response.data.message);
+            setLoadingBtn(false);
+          },
+        }
+      );
+    } catch (error) {
+      console.log("err.submit", error);
+      setLoadingBtn(false);
+    }
+  }, [storyList, mutation, setLoadingBtn]);
+
+  useEffect(() => {
+    if (data && !isLoading) {
+      setStoryList(data?.our_love_story);
+    }
+  }, [data, isLoading]);
 
   const renderMain = useMemo(() => {
     return (
@@ -115,8 +162,8 @@ function Form() {
           </div>
 
           {storyList.map((e: StoryListType, idx: number) => (
-            <div className="w-full px-4 mb-3 lg:w-12/12" key={idx}>
-              <div className="relative flex flex-col min-w-0 mb-6 break-words bg-white rounded shadow-lg xl:mb-0">
+            <div className="w-full px-4 md:mb-3 lg:w-12/12" key={idx}>
+              <div className="relative flex flex-col min-w-0 mb-3 break-words bg-white rounded shadow-lg md:mb-6 xl:mb-0">
                 <div className="flex-auto p-4">
                   <div className="flex flex-wrap">
                     <div className="relative flex-1 flex-grow w-full max-w-full pr-4">
@@ -150,16 +197,23 @@ function Form() {
 
         <hr className="mt-6 border-b-1 border-slate-300" />
         <div className="px-3 py-6 sm:mt-0">
-          <button
-            className="px-4 py-2 mb-1 text-xs font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-slate-700 active:bg-slate-600 hover:shadow-md focus:outline-none sm:mr-2"
-            type="button"
-          >
-            Submit
-          </button>
+          {loadingBtn ? (
+            <div className="w-8 h-8 border-[6px] rounded-full border-slate-600 loader"></div>
+          ) : (
+            <button
+              className="px-4 py-2 mb-1 text-xs font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-slate-700 active:bg-slate-600 hover:shadow-md focus:outline-none sm:mr-2 disabled:bg-slate-400 disabled:text-slate-200 disabled:cursor-not-allowed"
+              type="button"
+              onClick={onSubmit}
+              disabled={storyList.length === 0}
+            >
+              Submit
+            </button>
+          )}
         </div>
       </form>
     );
   }, [
+    loadingBtn,
     storyList,
     title,
     date,
@@ -170,6 +224,7 @@ function Form() {
     addDataToListStory,
     editDataFromListStory,
     removeDataFromListStory,
+    onSubmit,
   ]);
   return renderMain;
 }

@@ -15,10 +15,11 @@ const AuthSlice = createSlice({
         },
       };
     },
-    authLogin: (state) => {
+    authLogin: (state, action) => {
       return {
         ...state,
         isLogin: true,
+        token: action.payload,
       };
     },
     authLogout: () => {
@@ -27,6 +28,7 @@ const AuthSlice = createSlice({
           title: "Dashboard",
         },
         isLogin: false,
+        token: "",
       };
     },
   },

@@ -26,7 +26,7 @@ function MenuItem(props: IProps) {
                 : "text-slate-700 hover:text-slate-500"
             }`}
             onClick={() => {
-              dispatch(actions.authSetTitleNav(title));
+              dispatch(actions.authSetTitleNav(href));
             }}
           >
             <i

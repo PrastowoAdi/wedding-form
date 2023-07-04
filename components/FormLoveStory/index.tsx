@@ -2,8 +2,12 @@ import React, { useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import Form from "./Form";
+import { useGetUserInfo } from "@/hooks";
 
 function FormLoveStory() {
+  const userInfo = useGetUserInfo();
+  const { data, isLoading } = userInfo;
+
   const renderMain = useMemo(() => {
     return (
       <AnimatePresence>
@@ -30,12 +34,12 @@ function FormLoveStory() {
             </div>
           </div>
           <div className="flex-auto px-4 py-10 pt-0 lg:px-10">
-            <Form />
+            <Form data={data} isLoading={isLoading} />
           </div>
         </motion.div>
       </AnimatePresence>
     );
-  }, []);
+  }, [data, isLoading]);
   return renderMain;
 }
 

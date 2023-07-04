@@ -5,6 +5,7 @@ const initialState: IState = {
     title: "Dashboard",
   },
   isLogin: false,
+  token: "",
 };
 
 export default initialState;

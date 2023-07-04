@@ -7,6 +7,9 @@ import { IState } from "@/types/iState";
 
 export default function Navbar() {
   const navTitle = useSelector((state: IState) => state.nav);
+  const strReplace = navTitle.title.replace(/[\/]/g, " ");
+  const setReplaceDash = strReplace.replace(/[\-]/g, " ");
+
   return (
     <>
       {/* Navbar */}
@@ -15,7 +18,7 @@ export default function Navbar() {
           {/* Brand */}
           <Link href="/" legacyBehavior>
             <a className="hidden text-sm font-semibold uppercase text-slate-500 lg:inline-block">
-              {navTitle.title}
+              {setReplaceDash === " " ? "Dashboard" : setReplaceDash}
             </a>
           </Link>
           {/* User */}

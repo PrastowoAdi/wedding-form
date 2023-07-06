@@ -2,8 +2,12 @@ import React, { useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import Form from "./Form";
+import { useGetUserInfo } from "@/hooks";
 
 function FormShareLove() {
+  const userInfo = useGetUserInfo();
+  const { data, isLoading } = userInfo;
+
   const renderMain = useMemo(() => {
     return (
       <AnimatePresence>
@@ -30,23 +34,12 @@ function FormShareLove() {
             </div>
           </div>
           <div className="flex-auto px-4 py-10 pt-0 lg:px-10">
-            <form>
-              <Form />
-              <hr className="mt-6 border-b-1 border-slate-300" />
-              <div className="px-3 py-6 sm:mt-0">
-                <button
-                  className="px-4 py-2 mb-1 text-xs font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-slate-700 active:bg-slate-600 hover:shadow-md focus:outline-none sm:mr-2"
-                  type="button"
-                >
-                  Submit
-                </button>
-              </div>
-            </form>
+            <Form data={data} isLoading={isLoading} />
           </div>
         </motion.div>
       </AnimatePresence>
     );
-  }, []);
+  }, [data, isLoading]);
   return renderMain;
 }
 

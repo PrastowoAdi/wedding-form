@@ -29,7 +29,7 @@ function Form(props: IProps) {
   const [title, setTitle] = useState<string>("");
   const [date, setDate] = useState<string>("");
   const [story, setStory] = useState<string>("");
-  const [loadingBtn, setLoadingBtn] = useState<boolean>(false);
+  const [isLoadingBtn, isSetLoadingBtn] = useState<boolean>(false);
 
   const addDataToListStory = useCallback(() => {
     const listStory = [];
@@ -78,7 +78,7 @@ function Form(props: IProps) {
   );
 
   const onSubmit = useCallback(() => {
-    setLoadingBtn(true);
+    isSetLoadingBtn(true);
     try {
       mutation.mutate(
         {
@@ -88,20 +88,20 @@ function Form(props: IProps) {
           onSuccess(data) {
             if (data) {
               toast.success(data.data.message);
-              setLoadingBtn(false);
+              isSetLoadingBtn(false);
             }
           },
           onError(err: any) {
             toast.error(err.response.data.message);
-            setLoadingBtn(false);
+            isSetLoadingBtn(false);
           },
         }
       );
     } catch (error) {
       console.log("err.submit", error);
-      setLoadingBtn(false);
+      isSetLoadingBtn(false);
     }
-  }, [storyList, mutation, setLoadingBtn]);
+  }, [storyList, mutation, isSetLoadingBtn]);
 
   useEffect(() => {
     if (data && !isLoading) {
@@ -197,7 +197,7 @@ function Form(props: IProps) {
 
         <hr className="mt-6 border-b-1 border-slate-300" />
         <div className="px-3 py-6 sm:mt-0">
-          {loadingBtn ? (
+          {isLoadingBtn ? (
             <div className="w-8 h-8 border-[6px] rounded-full border-slate-600 loader"></div>
           ) : (
             <button
@@ -213,7 +213,7 @@ function Form(props: IProps) {
       </form>
     );
   }, [
-    loadingBtn,
+    isLoadingBtn,
     storyList,
     title,
     date,

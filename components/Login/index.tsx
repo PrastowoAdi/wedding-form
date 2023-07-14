@@ -77,7 +77,7 @@ function Login() {
               <div className="px-6 py-6 mb-0 rounded-t">
                 <div className="w-1/4 mx-auto mb-3 md:w-1/5">
                   <Image
-                    src="/assets/logo.png"
+                    src="/assets/logo1.png"
                     width={500}
                     height={500}
                     alt="logo"

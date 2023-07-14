@@ -1,6 +1,7 @@
 import * as utils from "@/utils";
 
 import {
+  IFormBrideGroom,
   IFormCountdown,
   IFormLoveStory,
   IFormShareLove,
@@ -25,4 +26,8 @@ export const userAddShareLove = async (params: IFormShareLove) => {
 
 export const useAddCountdown = async (params: IFormCountdown) => {
   return await utils.HttpClient.put("/api/wedding/user-countdown", params);
+};
+
+export const useAddBrideGroom = async (params: IFormBrideGroom) => {
+  return await utils.HttpClient.put("/api/wedding//user-bridegroom", params);
 };

@@ -269,7 +269,16 @@ function Form(props: IProps) {
         </div>
       </form>
     );
-  }, [onSubmit, handleSubmit, isLoadingBtn, register]);
+  }, [
+    handleSubmit,
+    onSubmit,
+    register,
+    startAkadDate,
+    endAkadDate,
+    startResepsiDate,
+    endResepsiDate,
+    isLoadingBtn,
+  ]);
   return renderMain;
 }
 

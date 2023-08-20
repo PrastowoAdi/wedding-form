@@ -6,6 +6,7 @@ const useGetUserInfo = () => {
     ["user-info"], // format brand-table-data it namaModule-table-listData
     async () => {
       const { data: axiosData } = await services.userInfo();
+      console.log("axiosData", axiosData);
       return axiosData.data;
     }
   );

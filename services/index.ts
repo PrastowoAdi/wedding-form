@@ -9,7 +9,7 @@ import {
 } from "@/types";
 
 export const login = async (params: IPropsLogin) => {
-  return await utils.HttpClient.post("/api/login", params);
+  return await utils.HttpClient.post("/api/wedding/login", params);
 };
 
 export const userInfo = async () => {

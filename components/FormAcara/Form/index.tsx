@@ -5,7 +5,7 @@ import { IFormCountdown, IPropsUserInfo } from "@/types";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import TextArea from "@/components/TextArea";
-
+import DatePicker from "react-datepicker";
 interface IProps {
   data: IPropsUserInfo;
   isLoading: boolean;
@@ -13,6 +13,11 @@ interface IProps {
 
 function Form(props: IProps) {
   const { data, isLoading } = props;
+
+  const [startResepsiDate, setStartResepsiDate] = useState(new Date());
+  const [endResepsiDate, setEndResepsiDate] = useState(new Date());
+  const [startAkadDate, setStartAkadDate] = useState(new Date());
+  const [endAkadDate, setEndAkadDate] = useState(new Date());
 
   const mutation = useAddCountdown();
 
@@ -30,6 +35,10 @@ function Form(props: IProps) {
     (data: IFormCountdown) => {
       isSetLoadingBtn(true);
       try {
+        data.countdown.akad.startAkadDate = startAkadDate;
+        data.countdown.akad.endAkadDate = endAkadDate;
+        data.countdown.resepsi.startResepsiDate = startResepsiDate;
+        data.countdown.resepsi.endResepsiDate = endResepsiDate;
         data.countdown.live_streaming_status =
           data.countdown.link_live_streaming === undefined ? false : true;
         data.countdown.date = data.countdown.akad.date;
@@ -55,7 +64,7 @@ function Form(props: IProps) {
         console.log("err.submit", error);
       }
     },
-    [mutation, isSetLoadingBtn]
+    [startAkadDate, endAkadDate, startResepsiDate, endResepsiDate, mutation]
   );
 
   useEffect(() => {
@@ -119,12 +128,35 @@ function Form(props: IProps) {
             />
           </div>
           <div className="w-full px-4 lg:w-6/12">
-            <InputType
-              label="Tanggal Acara"
-              placeholder="20/01/2023, 05:00-08:00"
-              type="text"
-              {...register("countdown.akad.date")}
-            />
+            <div className="relative w-full mb-3">
+              <label
+                className="block mb-2 text-xs font-bold uppercase text-slate-600"
+                htmlFor="grid-password"
+              >
+                Tanggal Acara
+              </label>
+              <div className="flex gap-2">
+                <DatePicker
+                  className="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
+                  selected={startAkadDate}
+                  onChange={(date: any) => {
+                    setStartAkadDate(date);
+                    setEndAkadDate(date);
+                  }}
+                  timeInputLabel="Time:"
+                  dateFormat="MM/dd/yyyy h:mm aa"
+                  showTimeInput
+                />
+                <DatePicker
+                  className="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
+                  selected={endAkadDate}
+                  onChange={(date: any) => setEndAkadDate(date)}
+                  timeInputLabel="Time:"
+                  dateFormat="MM/dd/yyyy h:mm aa"
+                  showTimeInput
+                />
+              </div>
+            </div>
           </div>
           <div className="w-full px-4 lg:w-12/12">
             <InputType
@@ -159,12 +191,35 @@ function Form(props: IProps) {
             />
           </div>
           <div className="w-full px-4 lg:w-6/12">
-            <InputType
-              label="Tanggal Acara"
-              placeholder="20/01/2023, 05:00-08:00"
-              type="text"
-              {...register("countdown.resepsi.date")}
-            />
+            <div className="relative w-full mb-3">
+              <label
+                className="block mb-2 text-xs font-bold uppercase text-slate-600"
+                htmlFor="grid-password"
+              >
+                Tanggal Acara
+              </label>
+              <div className="flex gap-2">
+                <DatePicker
+                  className="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
+                  selected={startResepsiDate}
+                  onChange={(date: any) => {
+                    setStartResepsiDate(date);
+                    setEndResepsiDate(date);
+                  }}
+                  timeInputLabel="Time:"
+                  dateFormat="MM/dd/yyyy h:mm aa"
+                  showTimeInput
+                />
+                <DatePicker
+                  className="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
+                  selected={endResepsiDate}
+                  onChange={(date: any) => setEndResepsiDate(date)}
+                  timeInputLabel="Time:"
+                  dateFormat="MM/dd/yyyy h:mm aa"
+                  showTimeInput
+                />
+              </div>
+            </div>
           </div>
           <div className="w-full px-4 lg:w-12/12">
             <InputType

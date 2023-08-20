@@ -54,6 +54,8 @@ export interface IInfoAkad {
   location_name: string;
   location_link: string;
   date: string;
+  startAkadDate: Date;
+  endAkadDate: Date;
 }
 
 export interface IInfoResepsi {
@@ -61,6 +63,8 @@ export interface IInfoResepsi {
   location_name: string;
   location_link: string;
   date: string;
+  startResepsiDate: Date;
+  endResepsiDate: Date;
 }
 
 export interface IInfoGroom {

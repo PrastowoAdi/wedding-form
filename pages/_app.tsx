@@ -11,9 +11,11 @@ import { ToastContainer } from "react-toastify";
 
 import { store, persistor } from "@/store";
 import Layout from "@/layout";
+import { Navbar, Sidebar } from "@/components";
+
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/globals.css";
-import { Navbar, Sidebar } from "@/components";
+import "react-datepicker/dist/react-datepicker.css";
 
 type Page<P = {}> = NextPage<P> & {
   getLayout?: (page: ReactNode) => ReactNode;
